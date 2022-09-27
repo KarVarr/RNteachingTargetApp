@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
-
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -19,11 +18,12 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+    'yanone-sans': require('./assets/fonts/YanoneKaffeesatz-Regular.ttf'),
+    'yanone-sans-bold': require('./assets/fonts/YanoneKaffeesatz-Bold.ttf'),
   });
-  if(!fontsLoaded) {
-    return <AppLoading/>
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
-
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
@@ -54,7 +54,9 @@ export default function App() {
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
       >
-        <SafeAreaView style={styles.rootScreen}>{screen}</SafeAreaView>
+        <SafeAreaView style={styles.rootScreen}>
+          {<GameOverScreen />}
+        </SafeAreaView>
       </ImageBackground>
     </LinearGradient>
   );

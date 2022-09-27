@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import Colors from '../../constants/colors';
 
-
 export default function InstuctionText({ children, style }) {
   return (
     <View>
@@ -13,9 +12,8 @@ export default function InstuctionText({ children, style }) {
 
 const styles = StyleSheet.create({
   instuctionText: {
-    fontFamily: 'open-sans',
+    fontFamily: 'yanone-sans-bold',
     color: Colors.accent500,
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 34,
   },
 });
