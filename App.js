@@ -1,8 +1,13 @@
 import { StyleSheet, SafeAreaView, ImageBackground } from 'react-native';
-import StartGameScreen from './screens/StartGameScreen';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+
+
+import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
+import GameOverScreen from './screens/GameOverScreen';
 
 const back = {
   uri: 'https://www.transparenttextures.com/patterns/cartographer.png',
@@ -10,14 +15,37 @@ const back = {
 
 export default function App() {
   const [userNumber, setUserNumber] = useState();
+  const [gameIsOver, setGameIsOver] = useState(true);
+  const [fontsLoaded] = useFonts({
+    'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+  });
+  if(!fontsLoaded) {
+    return <AppLoading/>
+  }
+
 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
+    setGameIsOver(false);
   }
+
+  function gameOverHandler() {
+    setGameIsOver(true);
+  }
+
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
+
   if (userNumber) {
-    return (screen = <GameScreen />);
+    return (screen = (
+      <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
+    ));
   }
+
+  if (gameIsOver && userNumber) {
+    screen = <GameOverScreen />;
+  }
+
   return (
     <LinearGradient colors={['#c0c0aa', '#1cefff']} style={styles.rootScreen}>
       <ImageBackground
